@@ -10,7 +10,10 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y tmux 
+# dnf5 install -y tmux
+
+# install niri and core desktop packages
+dnf5 install niri xdg-desktop-portal-wlr waybar acpi swaybg jq mako fuzzel swaylock swayidle brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
 
 # Use a COPR Example:
 #
