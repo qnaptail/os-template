@@ -13,7 +13,7 @@ set -ouex pipefail
 # dnf5 install -y tmux
 
 # install niri and core desktop packages
-dnf5 install niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
+dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
 
 # Use a COPR Example:
 #
