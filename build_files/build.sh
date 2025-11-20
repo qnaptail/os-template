@@ -13,7 +13,7 @@ set -ouex pipefail
 # dnf5 install -y tmux
 
 # install niri and core desktop packages
-dnf5 install niri xdg-desktop-portal-wlr waybar acpi swaybg jq mako fuzzel swaylock swayidle brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
+dnf5 install niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
 
 # Use a COPR Example:
 #
@@ -24,4 +24,4 @@ dnf5 install niri xdg-desktop-portal-wlr waybar acpi swaybg jq mako fuzzel swayl
 
 #### Example for enabling a System Unit File
 
-systemctl enable podman.socket
+# systemctl enable podman.socket
