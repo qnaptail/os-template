@@ -13,7 +13,16 @@ set -ouex pipefail
 # dnf5 install -y tmux
 
 # install niri and core desktop packages
-dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
+# dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
+
+# install niri and dankmaterialshell
+# https://github.com/YaLTeR/niri/wiki/Getting-Started
+dnf5 -y copr enable avengemedia/dms
+dnf5 -y install niri dms
+dnf5 -y copr disable avengemedia/dms
+
+# install Distrobox and Flatpak
+dnf5 -y install distrobox flatpak
 
 # Use a COPR Example:
 #
@@ -24,4 +33,4 @@ dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle
 
 #### Example for enabling a System Unit File
 
-# systemctl enable podman.socket
+systemctl enable podman.socket
