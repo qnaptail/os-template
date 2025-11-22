@@ -10,8 +10,8 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 ## Hardware and system packages
-dnf5 -y group install \
-        hardware-support
+dnf5 -y install \
+        @hardware-support
 
 # Network
 # dnf5 -y install \
@@ -55,11 +55,13 @@ dnf5 -y install \
 
 dnf5 -y install 'dnf5-command(copr)'
 dnf5 -y copr enable avengemedia/dms
-dnf5 -y install --setopt=install_weak_deps=False \
-        dms \
-        dms-cli \
-        dms-greeter \
-        dgop
+dnf5 -y install --setopt=install_weak_deps=False dms
+
+# dnf5 -y install --setopt=install_weak_deps=False \
+#         dms \
+#         dms-cli \
+#         dms-greeter \
+#         dgop
 dnf5 -y copr disable avengemedia/dms
 
 add_wants_niri() {
@@ -73,11 +75,11 @@ add_wants_niri udiskie.service
 # sed -i 's|spawn-at-startup "waybar"|// spawn-at-startup "waybar"|' "/usr/share/doc/niri/default-config.kdl"
 
 mkdir /var/cache/dms-greeter
-# chown greetd:greetd /var/cache/dms-greeter
-chown greeter:greeter /var/cache/dms-greeter
+chown greetd:greetd /var/cache/dms-greeter
+# chown greeter:greeter /var/cache/dms-greeter
 
 
-# sed -i 's|user = "greeter"|user = "greetd"|' "/etc/greetd/config.toml"
+sed -i 's|user = "greeter"|user = "greetd"|' "/etc/greetd/config.toml"
 sed -i '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
 
 # systemctl enable greetd
