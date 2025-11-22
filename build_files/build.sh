@@ -72,7 +72,7 @@ dnf5 -y install 'dnf5-command(copr)'
 dnf5 -y copr enable avengemedia/dms
 dnf5 -y install --setopt=install_weak_deps=False \
         dms \
-        dms-greater
+        dms-greeter
 
 # dnf5 -y install --setopt=install_weak_deps=False \
 #         dms \
