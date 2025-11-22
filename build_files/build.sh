@@ -29,7 +29,6 @@ dnf5 -y install \
 
 # Lenovo thinkpad power and fan control
 dnf5 -y install \
-        thinkpad_acpi \
         thinkfan \
         fancontrol-gui
 
