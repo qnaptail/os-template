@@ -50,6 +50,7 @@ dnf5 -y install \
         niri \
         greetd \
         greetd-selinux \
+        tuigreet \
         udiskie
 
 dnf5 -y install 'dnf5-command(copr)'
@@ -72,9 +73,11 @@ add_wants_niri udiskie.service
 # sed -i 's|spawn-at-startup "waybar"|// spawn-at-startup "waybar"|' "/usr/share/doc/niri/default-config.kdl"
 
 mkdir /var/cache/dms-greeter
-chown greetd:greetd /var/cache/dms-greeter
+# chown greetd:greetd /var/cache/dms-greeter
+chown greeter:greeter /var/cache/dms-greeter
 
-sed -i 's|user = "greeter"|user = "greetd"|' "/etc/greetd/config.toml"
+
+# sed -i 's|user = "greeter"|user = "greetd"|' "/etc/greetd/config.toml"
 sed -i '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
 
 # systemctl enable greetd
