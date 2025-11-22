@@ -10,12 +10,12 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 ## Hardware and system packages
-dnf5 -y install \
-        @hardware-support
+# dnf5 -y install \
+#         @hardware-support
 
 # Network
-# dnf5 -y install \
-#         NetworkManager-wifi
+dnf5 -y install \
+        NetworkManager-wifi
 
 # Audio
 # dnf5 -y install \
@@ -51,7 +51,9 @@ dnf5 -y install \
         greetd \
         greetd-selinux \
         tuigreet \
-        udiskie
+        udiskie \
+        gnome-keyring \
+        gnome-keyring-pam
 
 dnf5 -y install 'dnf5-command(copr)'
 dnf5 -y copr enable avengemedia/dms
@@ -74,10 +76,12 @@ add_wants_niri udiskie.service
 
 # sed -i 's|spawn-at-startup "waybar"|// spawn-at-startup "waybar"|' "/usr/share/doc/niri/default-config.kdl"
 
+systemctl enable --global gnome-keyring-daemon.socket
+systemctl enable --global gnome-keyring-daemon.service
+
 mkdir /var/cache/dms-greeter
 chown greetd:greetd /var/cache/dms-greeter
 # chown greeter:greeter /var/cache/dms-greeter
-
 
 sed -i 's|user = "greeter"|user = "greetd"|' "/etc/greetd/config.toml"
 sed -i '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
