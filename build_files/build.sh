@@ -71,7 +71,7 @@ add_wants_niri udiskie.service
 
 sed -i 's|spawn-at-startup "waybar"|// spawn-at-startup "waybar"|' "/usr/share/doc/niri/default-config.kdl"
 
-systemctl enable greetd
+# systemctl enable greetd
 
 ## Package and software management : Distrobox, Flatpak and Nix
 # https://github.com/89luca89/distrobox
