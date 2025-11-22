@@ -27,6 +27,12 @@ dnf5 -y install \
         alsa-tools-firmware \
         intel-audio-firmware
 
+# Lenovo thinkpad power and fan control
+dnf5 -y install \
+        thinkpad_acpi \
+        thinkfan \
+        fancontrol-gui
+
 ## Desktop environment : Niri window manager and DankMaterial shell
 # https://github.com/YaLTeR/niri/wiki/Getting-Started
 # https://github.com/AvengeMedia/DankMaterialShell
