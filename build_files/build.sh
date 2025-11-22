@@ -75,6 +75,7 @@ systemctl mask systemd-remount-fs.service
 #       g usbmuxd 113
 #       u usbmuxd 113:113 "usbmuxd user"
 # we can comment the first line in the config file :
-sed -i 's|\(g\s*usbmuxd\s*113\)|# \1|' /usr/lib/sysusers.d/usbmuxd.conf
+# sed -i 's|\(g\s*usbmuxd\s*113\)|# \1|' /usr/lib/sysusers.d/usbmuxd.conf
+sed -i 's|113:113|113|' /usr/lib/sysusers.d/usbmuxd.conf
 # we can also remove the package :
 # dnf5 -y remove usbmuxd
