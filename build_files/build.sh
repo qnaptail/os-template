@@ -29,7 +29,8 @@ dnf5 -y install \
 
 # Lenovo thinkpad power and fan control
 dnf5 -y install \
-        thinkfan
+        thinkfan \
+        zcfan
 
 ## Desktop environment : Niri window manager and DankMaterial shell
 # https://github.com/YaLTeR/niri/wiki/Getting-Started
