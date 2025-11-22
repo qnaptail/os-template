@@ -53,7 +53,6 @@ dnf5 -y install \
         niri \
         greetd \
         greetd-selinux \
-        tuigreet \
         udiskie \
         gnome-keyring \
         gnome-keyring-pam \
@@ -121,6 +120,11 @@ dnf5 -y install \
         google-noto-color-emoji-fonts \
         google-noto-emoji-fonts \
         fira-code-fonts
+
+# Theming
+dnf5 -y install \
+        adw-gtk3-theme \
+        qt6ct
 
 # Terminal utils
 dnf5 -y install \
