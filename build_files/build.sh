@@ -13,37 +13,62 @@ set -ouex pipefail
 dnf5 -y group install \
         hardware-support
 
-dnf5 -y install \
-        glibc-langpack-fr
-
 # Network
 dnf5 -y install \
         NetworkManager-wifi
 
 # Audio
-dnf5 -y install \
-        alsa-firmware \
-        alsa-sof-firmware \
-        alsa-tools-firmware \
-        intel-audio-firmware
+# dnf5 -y install \
+#         alsa-firmware \
+#         alsa-sof-firmware \
+#         alsa-tools-firmware \
+#         intel-audio-firmware
 
 # Lenovo thinkpad power and fan control
 dnf5 -y install \
-        thinkfan \
+        power-profiles-daemon \
         zcfan
+
+systemctl enable zcfan.service
+
+# French Locale
+dnf5 -y install \
+        glibc-langpack-fr
+
+# Zram (ram compression to avoid swaping)
+tee /usr/lib/systemd/zram-generator.conf <<'EOF'
+[zram0]
+zram-size = min(ram / 2, 8192)
+EOF
 
 ## Desktop environment : Niri window manager and DankMaterial shell
 # https://github.com/YaLTeR/niri/wiki/Getting-Started
 # https://github.com/AvengeMedia/DankMaterialShell
 # dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
-dnf5 -y install 'dnf5-command(copr)'
-dnf5 -y copr enable avengemedia/dms
 dnf5 -y install \
         niri \
-        dms
+        greetd \
+        greetd-selinux \
+        udiskie
+
+dnf5 -y install 'dnf5-command(copr)'
+dnf5 -y copr enable avengemedia/dms
+dnf5 -y install --setopt=install_weak_deps=False \
+        dms \
+        dms-cli \
+        dms-greeter \
+        dgop
 dnf5 -y copr disable avengemedia/dms
 
-# systemctl --user add-wants niri.service dms
+add_wants_niri() {
+    sed -i "s/\[Unit\]/\[Unit\]\nWants=$1/" "/usr/lib/systemd/user/niri.service"
+}
+add_wants_niri dms.service
+# add_wants_niri swayidle.service
+add_wants_niri udiskie.service
+add_wants_niri foot.service
+
+systemctl enable greetd
 
 ## Package and software management : Distrobox, Flatpak and Nix
 # https://github.com/89luca89/distrobox
