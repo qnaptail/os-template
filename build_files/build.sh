@@ -17,12 +17,12 @@ dnf5 -y install \
         pciutils \
         usbutils \
         usb_modeswitch \
-        intel-audio-firmware \
         iwlwifi-dvm-firmware \
         iwlwifi-mld-firmware \
         iwlwifi-mvm-firmware \
-        intel-gpu-firmware \
-        realtek-firmware
+        alsa-firmware \
+        alsa-sof-firmware \
+        alsa-tools-firmware
 
 # Network
 dnf5 -y install \
