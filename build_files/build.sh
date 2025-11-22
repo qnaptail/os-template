@@ -16,24 +16,21 @@ set -ouex pipefail
 dnf5 -y install \
         pciutils \
         usbutils \
-        usb_modeswitch \
-        iwlwifi-dvm-firmware \
-        iwlwifi-mld-firmware \
-        iwlwifi-mvm-firmware \
-        alsa-firmware \
-        alsa-sof-firmware \
-        alsa-tools-firmware
+        usb_modeswitch
 
 # Network
 dnf5 -y install \
-        NetworkManager-wifi
+        NetworkManager-wifi \
+        iwlwifi-dvm-firmware \
+        iwlwifi-mld-firmware \
+        iwlwifi-mvm-firmware
 
 # Audio
-# dnf5 -y install \
-#         alsa-firmware \
-#         alsa-sof-firmware \
-#         alsa-tools-firmware \
-#         intel-audio-firmware
+dnf5 -y install \
+        alsa-firmware \
+        alsa-sof-firmware \
+        alsa-tools-firmware \
+        intel-audio-firmware
 
 # Lenovo thinkpad power and fan control
 dnf5 -y install \
@@ -41,11 +38,6 @@ dnf5 -y install \
         zcfan
 
 systemctl enable zcfan.service
-
-# French and english Locale
-dnf5 -y install \
-        glibc-langpack-fr \
-        glibc-langpack-en
 
 # Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'
@@ -105,6 +97,7 @@ sed -i '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session
 systemctl enable greetd
 
 ## Package and software management : Distrobox, Flatpak and Nix
+# TODO: Install nix (https://gist.github.com/queeup/1666bc0a5558464817494037d612f094)
 # https://github.com/89luca89/distrobox
 # https://docs.flatpak.org/en/latest/getting-started.html
 dnf5 -y install \
@@ -119,11 +112,25 @@ dnf5 -y install \
 
 
 ## Terminal utils
+
+# Locale and fonts
+dnf5 -y install \
+        glibc-langpack-fr \
+        glibc-langpack-en \
+        default-fonts-core-emoji \
+        google-noto-color-emoji-fonts \
+        google-noto-emoji-fonts \
+        fira-code-fonts
+
+# Terminal utils
 dnf5 -y install \
         foot \
         fish \
-        vim \
-        fira-code-fonts
+        vim
+
+dnf5 -y copr enable atim/starship
+dnf5 -y install starship
+dnf5 -y copr disable atim/starship
 
 ### Systemd units
 systemctl enable podman.socket
