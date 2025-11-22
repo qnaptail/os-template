@@ -9,40 +9,52 @@ set -ouex pipefail
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
-# this installs a package from fedora repos
-# dnf5 install -y tmux
+## Hardware and system packages
+dnf5 -y group install \
+        hardware-support
 
-# install niri and core desktop packages
-# dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
+# Network
+dnf5 -y install \
+        NetworkManager-wifi
 
-# install niri and dankmaterialshell
+# Audio
+dnf5 -y install \
+        alsa-firmware \
+        alsa-sof-firmware \
+        alsa-tools-firmware \
+        intel-audio-firmware
+
+## Desktop environment : Niri window manager and DankMaterial shell
 # https://github.com/YaLTeR/niri/wiki/Getting-Started
-# dnf -y install dnf5-plugins
-# dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
-
-# group install
-dnf5 -y group install hardware-support
-
-
-# dnf -y upgrade --refresh
+# https://github.com/AvengeMedia/DankMaterialShell
+# dnf5 install -y niri xdg-desktop-portal-wlr waybar acpi swaybg swaylock swayidle mako fuzzel brightnessctl gammastep pavucontrol egl-wayland xwayland-satellite yad
 dnf5 -y install 'dnf5-command(copr)'
 dnf5 -y copr enable avengemedia/dms
-dnf5 -y install niri dms
+dnf5 -y install \
+        niri \
+        dms
 dnf5 -y copr disable avengemedia/dms
 
-# install Distrobox and Flatpak
-dnf5 -y install distrobox flatpak
+systemctl --user add-wants niri.service dms
 
-# install foot terminal and utils, fira code fonts
-dnf5 -y install foot vim fira-code-fonts
+## Package and software management : Distrobox, Flatpak and Nix
+# https://github.com/89luca89/distrobox
+# https://docs.flatpak.org/en/latest/getting-started.html
+# dnf5 -y install \
+#         distrobox \
+#         flatpak
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+dnf5 -y install \
+        distrobox
 
-#### Example for enabling a System Unit File
+## Terminal utils
+dnf5 -y install \
+        foot \
+        fish \
+        vim \
+        fira-code-fonts
 
-# systemctl enable podman.socket
+### Systemd units
+systemctl enable podman.socket
+systemctl enable systemd-timesyncd
+systemctl enable systemd-resolved.service
