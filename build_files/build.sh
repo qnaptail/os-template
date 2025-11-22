@@ -31,9 +31,10 @@ dnf5 -y install \
 
 systemctl enable zcfan.service
 
-# French Locale
+# French and english Locale
 dnf5 -y install \
-        glibc-langpack-fr
+        glibc-langpack-fr \
+        glibc-langpack-en
 
 # Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'
@@ -66,7 +67,9 @@ add_wants_niri() {
 add_wants_niri dms.service
 # add_wants_niri swayidle.service
 add_wants_niri udiskie.service
-add_wants_niri foot.service
+# add_wants_niri foot.service
+
+sed -i 's|spawn-at-startup "waybar"|// spawn-at-startup "waybar"|' "/usr/share/doc/niri/default-config.kdl"
 
 systemctl enable greetd
 
