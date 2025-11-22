@@ -64,8 +64,17 @@ systemctl enable systemd-resolved.service
 
 ### Troubleshooting
 
-# The systemd-remount-fs service fails on boot because the root filesystem on an ostree system is read-only by design. We can mask it to avoid harmless log errors.
+## The systemd-remount-fs service fails on boot because the root filesystem on an ostree system is read-only by design.
+# We can mask it to avoid harmless log errors.
+# https://gitlab.com/fedora/ostree/sig/-/issues/72
 systemctl mask systemd-remount-fs.service
 
-# Force the system to create any missing system users and groups from its default configuration files.
-systemd-sysusers
+## The systemd-sysusers service is failing to started
+# systemd-sysusers return the following error : /etc/shadow: Group "usbmuxd" already exists.
+# seems like the group is defined twice in the /usr/lib/sysusers.d/usbmuxd.conf
+#       g usbmuxd 113
+#       u usbmuxd 113:113 "usbmuxd user"
+# we can comment the first line in the config file :
+sed -i 's|\(g\s*usbmuxd\s*113\)|# \1|' /usr/lib/sysusers.d/usbmuxd.conf
+# we can also remove the package :
+# dnf5 -y remove usbmuxd
