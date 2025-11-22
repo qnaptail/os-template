@@ -119,7 +119,8 @@ dnf5 -y install \
         default-fonts-core-emoji \
         google-noto-color-emoji-fonts \
         google-noto-emoji-fonts \
-        fira-code-fonts
+        fira-code-fonts \
+        jetbrains-mono-fonts
 
 # Theming
 dnf5 -y install \
