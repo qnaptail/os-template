@@ -13,7 +13,7 @@ usbutils
 vulkan-tools
 libva-utils
 lm_sensors
-ntfs3g
+ntfs-3g
 
 # Network
 NetworkManager-wifi
@@ -22,8 +22,8 @@ iwlwifi-mld-firmware
 iwlwifi-mvm-firmware
 usb_modeswitch
 nmap
-bind-utils
-nfs-utils
+#bind-utils
+#nfs-utils
 wget
 wol
 firewalld
@@ -34,7 +34,7 @@ tailscale
 alsa-firmware
 alsa-sof-firmware
 alsa-tools-firmware
-intel-audio-firmware
+#intel-audio-firmware
 easyeffects
 
 # Power and fan control
@@ -96,7 +96,7 @@ zoxide
 fzf
 starship
 bat
-jq
+#jq
 ripgrep
 fd-find
 tldr
