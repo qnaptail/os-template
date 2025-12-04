@@ -112,10 +112,11 @@ vim-default-editor
 p7zip
 feh
 
-
 # Virtualisation
-#qemu-kvm
-#libvirt
-#virt-install
-#virt-viewer
-#virt-manager
+qemu-kvm
+libvirt
+libvirt-daemon-kvm
+libvirt-daemon-config-network
+virt-install
+virt-viewer
+virt-manager

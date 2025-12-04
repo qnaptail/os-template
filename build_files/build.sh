@@ -59,15 +59,15 @@ chmod 0600 /usr/lib/modules/"$QUALIFIED_KERNEL"/initramfs.img
 # Lastly if you use SELinux, you need to enable the necessary policy to be able to load kernel modules.
 setsebool -P domain_kernel_load_modules on
 
-# CLEANUP
-# Disable repos so they don't appear in final image
+# Clean up packages
 dnf5 -y autoremove
+
+# Disable repos so they don't appear in final image
 dnf5 -y copr disable avengemedia/dms
 dnf5 -y copr disable atim/starship
 dnf5 -y copr disable lihaohong/yazi
 dnf5 -y copr disable varlad/zellij
 dnf5 -y copr disable bieszczaders/kernel-cachyos
-dnf5 clean all
 
 ## Package and software management : Distrobox, Flatpak and Nix
 # TODO: Install nix (https://gist.github.com/queeup/1666bc0a5558464817494037d612f094)
@@ -107,6 +107,7 @@ EOF
 
 ### Systemd units
 systemctl enable podman.socket
+systemctl enable virtqemud
 systemctl enable systemd-timesyncd
 systemctl enable systemd-resolved.service
 systemctl mask rpm-ostree-countme.timer
@@ -121,3 +122,23 @@ systemctl disable NetworkManager-wait-online.service
 # We can mask it to avoid harmless log errors.
 # https://gitlab.com/fedora/ostree/sig/-/issues/72
 systemctl mask systemd-remount-fs.service
+
+
+### CLEANUP
+dnf5 clean all
+
+rpm-ostree cleanup --repomd
+
+rm -rf /tmp/* || true
+find /var/* -maxdepth 0 -type d \! -name cache -exec rm -fr {} \;
+find /var/cache/* -maxdepth 0 -type d \! -name libdnf5 \! -name rpm-ostree -exec rm -fr {} \;
+
+mkdir -p /var/tmp
+chmod -R 1777 /var/tmp
+
+ostree container commit
+
+
+
+
+
