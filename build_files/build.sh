@@ -44,7 +44,7 @@ popd
 
 # dnf5 -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 dnf5 -y remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
-dnf5 -y versionlock install kernel-cachyos kernel-cachyos-devel-matched
+dnf5 -y install kernel-cachyos kernel-cachyos-devel-matched
 
 pushd /usr/lib/kernel/install.d
 mv -f 05-rpmostree.install.bak 05-rpmostree.install
