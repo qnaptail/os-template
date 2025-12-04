@@ -62,6 +62,7 @@ greetd-selinux
 gnome-keyring-pam
 dms
 dms-greeter
+swayidle
 
 ###
 ## Package and software management
