@@ -79,10 +79,10 @@ fi
 
 if [[ -n "$TO_REMOVE" ]]; then
     echo "=== Removing apps NOT in declarative list ==="
-    while IFS= read -r app; do
+    for app in $TO_REMOVE; do
         echo "Removing: $app"
         flatpak --user uninstall -y "$app"
-    done <<< "$TO_REMOVE"
+    done
 fi
 
 echo "=== Removing unused dependencies ==="
@@ -94,10 +94,10 @@ flatpak --user uninstall -y --unused
 
 if [[ -n "$TO_INSTALL" ]]; then
     echo "=== Installing missing apps from flathub ==="
-    while IFS= read -r app; do
+    for app in $TO_INSTALL; do
         echo "Installing: $app"
         flatpak --user install -y flathub "$app"
-    done <<< "$TO_INSTALL"
+    done
 fi
 
 echo "=== Check and repair dependencies ==="
