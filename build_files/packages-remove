@@ -1,6 +1,6 @@
-####################################################
+##########################################################
 # List of packages to remove from image
-####################################################
+##########################################################
 
 # Helper to install package on the command line - Not compatible with bootc
 PackageKit-command-not-found
