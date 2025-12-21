@@ -94,11 +94,19 @@ systemctl enable greetd
 # https://packages.fedoraproject.org/pkgs/nix/nix/
 # TODO: Users management (?)
 
+## Link /nix to /var/nix to make the nix store writable
+mkdir /var/nix
+rmdir /nix
+ln -sr /var/nix /nix
+
 ## Enable Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'
 [zram0]
 zram-size = min(ram / 2, 8192)
 EOF
+
+# Copy configuration files in etc
+systemctl disable NetworkManager-wait-online.service
 
 ## Systemd units
 systemctl enable podman.socket

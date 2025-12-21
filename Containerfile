@@ -24,6 +24,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh
-    
+
+## Configs
+COPY rootfs/ /
+
 ## Linting (Verify final image and content correctness)
 RUN bootc container lint
