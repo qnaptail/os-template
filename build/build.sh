@@ -9,6 +9,7 @@ OSNAME="tinados"
 #######################################################################
 # INSTALL PACKAGES
 #######################################################################
+# TODO: Use dnf install_weak_deps flag to manage dependencies in a finer way
 
 ## Prepare packages lists
 ## Save base/added/removed package lists in /usr/
@@ -27,7 +28,8 @@ dnf5 -y copr enable varlad/zellij
 dnf5 -y copr enable bieszczaders/kernel-cachyos
 
 ## Install and remove packages
-grep -vE '^#' /usr/local/share/$OSNAME/packages-add | xargs dnf5 -y install --allowerasing # --setopt=install_weak_deps=False
+# grep -vE '^#' /usr/local/share/$OSNAME/packages-add | xargs dnf5 -y install --allowerasing --setopt=install_weak_deps=False
+grep -vE '^#' /usr/local/share/$OSNAME/packages-add | xargs dnf5 -y install --allowerasing
 grep -vE '^#' /usr/local/share/$OSNAME/packages-remove | xargs dnf5 -y remove
 
 
@@ -95,10 +97,10 @@ systemctl enable greetd
 # TODO: Users management (?)
 
 ## Symlink /nix to /var/nix to make the nix store writable
-mkdir -p /var/nix
-cp -r /nix/* /var/nix/
-rm -rf /nix
-ln -s /var/nix /nix
+# mkdir -p /var/nix
+# cp -r /nix/* /var/nix/
+# rm -rf /nix
+# ln -s /var/nix /nix
 
 ## Enable Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'

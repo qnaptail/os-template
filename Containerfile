@@ -29,5 +29,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 # ## Configs
 # COPY rootfs/ /
 
+RUN mkdir -p /var/nix && cp -r /nix/* /var/nix/ && rm -rf /nix && ln -sr /var/nix /nix
+
 ## Linting (Verify final image and content correctness)
 RUN ostree container commit && bootc container lint
