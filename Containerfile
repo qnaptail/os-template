@@ -18,9 +18,6 @@ FROM quay.io/fedora/fedora-bootc:latest
 
 # RUN rm /opt && mkdir /opt
 
-## Configs
-COPY rootfs/ /
-
 ## Modifictions
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
@@ -29,7 +26,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh
 
 ## Configs
-# COPY rootfs/ /
+COPY rootfs/ /
 
 ## Linting (Verify final image and content correctness)
 RUN bootc container lint
