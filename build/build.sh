@@ -13,6 +13,7 @@ OSNAME="tinados"
 
 ## Prepare packages lists
 ## Save base/added/removed package lists in /usr/
+mkdir -p /usr/share/$OSNAME
 mkdir -p /usr/local/share/$OSNAME
 jq -r .packages[] /usr/share/rpm-ostree/treefile.json > /usr/local/share/$OSNAME/packages-base-image
 cp /ctx/build/packages-add /usr/local/share/$OSNAME/packages-add
