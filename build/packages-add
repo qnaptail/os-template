@@ -127,13 +127,13 @@ feh
 # VIRTUALISATION
 ##########################################################
 
-##incus
-##incus-tools
-###qemu-kvm
-###libvirt
-##libvirt-daemon-kvm
-##libvirt-daemon-config-network
-##virt-install
-###virt-viewer
-##virt-manager
+incus
+incus-tools
+#qemu-kvm
+#libvirt
+libvirt-daemon-kvm
+libvirt-daemon-config-network
+virt-install
+#virt-viewer
+virt-manager
 
