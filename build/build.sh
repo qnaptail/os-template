@@ -98,7 +98,7 @@ systemctl enable greetd
 
 ## Symlink /nix to /var/nix to make the nix store writable (does not work)
 # cp -r /nix /var/ && rm -rf /nix && ln -s /var/nix /nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ostree --no-confirm --persistence=/var/lib/nix
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ostree --no-confirm --persistence=/var/lib/nix --init=none
 
 ## Enable Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'
