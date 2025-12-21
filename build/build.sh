@@ -98,15 +98,6 @@ systemctl enable greetd
 
 ## Symlink /nix to /var/nix to make the nix store writable (does not work)
 # cp -r /nix /var/ && rm -rf /nix && ln -s /var/nix /nix
-sudo tee /etc/ostree/prepare-root.conf <<'EOL'
-[composefs]
-enabled = yes
-[root]
-transient = true
-EOL
-
-rpm-ostree initramfs-etc --reboot --track=/etc/ostree/prepare-root.conf
-
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ostree --no-confirm --persistence=/var/lib/nix
 
 ## Enable Zram (ram compression to avoid swaping)
