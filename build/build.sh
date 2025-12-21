@@ -14,8 +14,8 @@ OSNAME="tinados"
 ## Save base/added/removed package lists in /usr/
 mkdir -p /usr/local/share/$OSNAME
 jq -r .packages[] /usr/share/rpm-ostree/treefile.json > /usr/local/share/$OSNAME/packages-base-image
-cp /ctx/packages-add /usr/local/share/$OSNAME/packages-add
-cp /ctx/packages-remove /usr/local/share/$OSNAME/packages-remove
+cp /ctx/build/packages-add /usr/local/share/$OSNAME/packages-add
+cp /ctx/build/packages-remove /usr/local/share/$OSNAME/packages-remove
 chmod  0644 /usr/local/share/$OSNAME/*
 
 ## Install third party repositories
@@ -95,10 +95,10 @@ systemctl enable greetd
 # TODO: Users management (?)
 
 ## Symlink /nix to /var/nix to make the nix store writable
-mkdir /var/nix
+# mkdir /var/nix
 cp -r /nix /var/nix
-rm -rf /nix
-ln -sf /var/nix /nix
+# rm -rf /nix
+ln -sfr /var/nix /nix
 
 ## Enable Zram (ram compression to avoid swaping)
 tee /usr/lib/systemd/zram-generator.conf <<'EOF'
@@ -121,6 +121,13 @@ systemctl enable zcfan.service
 
 # Disabling wait-online to decrease the boot time
 systemctl disable NetworkManager-wait-online.service
+
+#######################################################################
+# CONFIGURATION
+#######################################################################
+
+## Copy all config files to the system
+cp -avf "/ctx/rootfs"/. /
 
 
 #######################################################################
@@ -158,19 +165,12 @@ dnf5 -y copr disable bieszczaders/kernel-cachyos
 
 ## Clean all build files
 dnf5 clean all
-
 rpm-ostree cleanup --repomd
-
 rm -rf /tmp/* || true
-find /var/* -maxdepth 0 -type d \! -name cache -exec rm -fr {} \;
+
+# Clean /var directory while preserving essential files
+find /var/* -maxdepth 0 -type d \! -name cache \! -name nix -exec rm -fr {} \;
 find /var/cache/* -maxdepth 0 -type d \! -name libdnf5 \! -name rpm-ostree -exec rm -fr {} \;
 
 mkdir -p /var/tmp
 chmod -R 1777 /var/tmp
-
-ostree container commit
-
-
-
-
-
